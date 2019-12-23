@@ -21,17 +21,25 @@
              (+ :nl 0))
      :main (some (group :row))}))
 
-(def field-unescape
-  (peg/compile
-   '{:dquote "\""
-     :d_dquote (* :dquote :dquote)
-     :main (/ :d_dquote :dquote)}))
+(defn- unescape-field [field]
+  (string/replace-all "\"\"" "\"" field))
 
-(defn parse [input &opt header]
-  (let [data (peg/match csv-lang input)]
+(defn- unescape-row [row]
+  (map unescape-field row))
+
+(defn- parse-and-clean [data]
+  (->> data
+       (peg/match csv-lang)
+       (map unescape-row)))
+
+(defn- headerize [ary]
+  (let [header (map keyword (first ary))
+        data   (array/slice ary 1)]
+    (map (fn [row] (zipcoll header row))
+         data)))
+
+(defn parse [input &opt header cleanup]
+  (let [data (parse-and-clean input)]
     (if header
-      (let [header (map keyword (first data))
-            data (array/slice data 1)]
-        (map (fn [ary] (zipcoll header ary))
-             data))
-     data)))
+      (headerize data)
+      data)))
