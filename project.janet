@@ -3,4 +3,4 @@
  :description "janet csv parser")
 
 (declare-source
- :source ["parser.janet"])
+ :source ["csv.janet"])

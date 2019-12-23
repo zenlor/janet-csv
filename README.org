@@ -1,0 +1,25 @@
+#+TITLE:   Janet CSV Parser
+#+DATE:    December 23, 2019
+#+SINCE:   {replace with next tagged release version}
+#+STARTUP: inlineimages
+
+* Table of Contents :TOC_3:noexport:
+- [[#description][Description]]
+- [[#api][API]]
+
+* Description
+A simple CSV parser based on janet's peg library.
+
+It can parse:
+
++ headers
++ multiline fields
++ escaped field characters
+
+* API
+
++ ~(csv-parser/parser data &opt header)~
+  + ~data~ :: a string
+  + ~header~ :: use the first line as an header
+
+Returns an Array of Arrays or an Array of Dicts.

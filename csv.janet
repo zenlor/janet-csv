@@ -38,7 +38,7 @@
     (map (fn [row] (zipcoll header row))
          data)))
 
-(defn parse [input &opt header cleanup]
+(defn parse [input &opt header]
   (let [data (parse-and-clean input)]
     (if header
       (headerize data)

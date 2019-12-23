@@ -1,4 +1,4 @@
-(import ../parser :as csv)
+(import ../csv :as csv)
 
 (def sample
 ``h1,h2
