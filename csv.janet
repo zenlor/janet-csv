@@ -43,3 +43,41 @@
     (if header
       (headerize data)
       data)))
+
+(defn- field-to-csv
+  [field]
+  "escape strings for csv"
+  (if (or (string/find "\"" field)
+          (string/find "\n" field)
+          (string/find " " field))
+    (string/format "\"%s\""
+                   (string/replace-all "\"" "\"\"" field))
+    field))
+
+(defn- is-list?
+  [data]
+  (or (array? row)
+      (struct? row)))
+
+(defn- row-to-csv
+  [row]
+  (map field-to-csv
+       (if (is-list? row)
+           (values row)
+           row)))
+
+(defn- to-array-of-array
+  [data]
+  (let [ary @[]]
+    (when (not (is-list? (first data)))
+      (array/push ary headers))
+    (each row data
+      (array/push ary (row-to-csv row)))
+    ary))
+
+(defn to-string
+  [data]
+  (string/join (map (fn [row] (string/join row ","))
+                   (to-array-of-array data))
+               "\r\n"))
+

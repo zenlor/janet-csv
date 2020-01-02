@@ -3,7 +3,7 @@
 (def sample
  ``"new ""doublyquoted word""","double ""doublequote"""``)
 
-(let [results (csv/parse-and-clean sample)]
+(let [results (csv/parse sample)]
   (each row results
     (each field row
       (when
