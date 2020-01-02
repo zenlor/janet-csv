@@ -15,7 +15,9 @@
                      (<- (some (+ (if :d_dquote 2)
                                   (if-not :dquote 1))))
                      :dquote))
-     :field (* :space? :textdata :space?)
+     :empty_field 0
+     :field (accumulate (+ (* :space? :textdata :space?)
+                           :empty_field))
      :row (* (any (+ (* :field :comma)
                      :field))
              (+ :nl 0))
@@ -47,12 +49,15 @@
 (defn- field-to-csv
   [field]
   "escape strings for csv"
-  (if (or (string/find "\"" field)
-          (string/find "\n" field)
-          (string/find " " field))
-    (string/format "\"%s\""
-                   (string/replace-all "\"" "\"\"" field))
-    field))
+  (if (and (not= nil field)
+           (or (string/find "\"" field)
+               (string/find "\n" field)
+               (string/find " " field)))
+    (->> (string/replace-all "\"" "\"\"" field)
+         (string/format "\"%s\""))
+    (if (= nil field)
+      ""
+      field)))
 
 (defn- is-list?
   [data]
@@ -61,10 +66,11 @@
 
 (defn- row-to-csv
   [row]
-  (map field-to-csv
-       (if (is-list? row)
-           (values row)
-           row)))
+  (let [data (if (not (is-list? row))
+               (values row)
+               row)]
+    (map field-to-csv
+         data)))
 
 (defn- to-array-of-array
   [data]
