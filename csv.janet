@@ -56,8 +56,8 @@
 
 (defn- is-list?
   [data]
-  (or (array? row)
-      (struct? row)))
+  (or (array? data)
+      (struct? data)))
 
 (defn- row-to-csv
   [row]
@@ -70,7 +70,8 @@
   [data]
   (let [ary @[]]
     (when (not (is-list? (first data)))
-      (array/push ary headers))
+      (array/push ary (-> (first data)
+                          keys)))
     (each row data
       (array/push ary (row-to-csv row)))
     ary))
