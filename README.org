@@ -18,7 +18,7 @@ It can parse:
 
 * API
 
-+ ~(csv-parser/parser data &opt header)~
++ ~(csv-parser/parse data &opt header)~
   + ~data~ :: a string
   + ~header~ :: use the first line as an header
 
