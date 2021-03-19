@@ -10,5 +10,7 @@
                 true)]
   (pp results)
   (if (not= 2 (length results))
-    (error "results length not valid")))
-
+    (error "results length not valid"))
+  (loop [row :in results]
+    (if (not= 3 (length row))
+      (error "resulting row is not valid"))))

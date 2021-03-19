@@ -3,6 +3,7 @@
    '{:comma ","
      :space " "
      :space? (any :space)
+     :comma? (at-most 1 :comma)
      :cr "\r"
      :lf "\n"
      :nl (+ (* :cr :lf)
@@ -18,8 +19,8 @@
      :empty_field 0
      :field (accumulate (+ (* :space? :textdata :space?)
                            :empty_field))
-     :row (* (any (+ (* :field :comma)
-                     :field))
+     :row (* :field
+             (any (* :comma :field))
              (+ :nl 0))
      :main (some (group :row))}))
 
