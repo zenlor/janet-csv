@@ -3,6 +3,8 @@
 #+SINCE:   {replace with next tagged release version}
 #+STARTUP: inlineimages
 
+> Released under [ISC license](./LICENSE)
+
 * Table of Contents :TOC_3:noexport:
 - [[#description][Description]]
 - [[#api][API]]

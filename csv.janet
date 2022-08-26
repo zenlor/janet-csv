@@ -1,3 +1,9 @@
+# Copyright (c) 2022 Lorenzo Giuliani
+#
+# Licensed under the ISC license: https://opensource.org/licenses/ISC
+# Permission is granted to use, copy, modify, and redistribute the work.
+# Full license information available in the project LICENSE file.
+
 (def csv-lang
   (peg/compile
    '{:comma ","
