@@ -19,8 +19,8 @@
      :d_dquote (* :dquote :dquote)
      :textdata (+ (<- (some (if-not (+ :dquote :comma :nl) 1)))
                   (* :dquote
-                     (<- (some (+ (if :d_dquote 2)
-                                  (if-not :dquote 1))))
+                     (<- (any (+ (if :d_dquote 2)
+                                 (if-not :dquote 1))))
                      :dquote))
      :empty_field 0
      :field (accumulate (+ (* :space? :textdata :space?)
@@ -94,4 +94,3 @@
   (string/join (map (fn [row] (string/join row ","))
                    (to-array-of-array data))
                "\r\n"))
-
